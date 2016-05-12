@@ -18,23 +18,50 @@
     </div>
   </nav>
   <script>
-  projectId = projectId.replace("://scratch.mit.edu/projects/", "").replace("https", "").replace("http", "");
-		projectId = parseInt(projectId);
-		if(isNaN(projectId)){
-			$("#project").css("color", "red");
-		}
+    var qs = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {
+        var p=a[i].split('=', 2);
+        if (p.length == 1)
+            b[p[0]] = "";
+        else
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+    }
+    return b;
+})(window.location.search.substr(1).split('&'));
+projectId=qs["url"]
+projectId = projectId.replace("://scratch.mit.edu/projects/", "").replace("https", "").replace("http", "");
+  projectId = parseInt(projectId);
+  if(isNaN(projectId)){
+    var myCodeMirror = CodeMirror(document.body, {
+    value: "ERROR: INVALID URL",
+    mode:  "javascript"
+  });
+  }
   window.onload = function() {
-    fetch('https://scratchblocks.github.io/js/scratchblocks-v3.1-min.js')
+    fetch("https://crossorigin.me/https://cdn.projects.scratch.mit.edu/internalapi/project/"+projectId+"/get/")
   .then(function(response) {
-    response.text().then(function(text) {  var myCodeMirror = CodeMirror(document.body, {
+    response.text().then(function(text) {
+        var myCodeMirror = CodeMirror(codemirroreditor, {
         value: text,
-        mode:  "javascript"
+        mode:  {name: "javascript", json: true}
       });});
   })
 }
   </script>
+  <style>
+.CodeMirror {
+  height: auto; !important
+  width: auto; !important
+}
+  </style>
   </head>
-  <body>
+  <body style="height: 100%; width: 100%;">
+    <div style="height: 100%; width: 100%;" id="codemirroreditor">
+
+    </div>
     <script src="https://cdn.rawgit.com/codemirror/CodeMirror/master/lib/codemirror.js"></script>
 <link rel="stylesheet" href="https://cdn.rawgit.com/codemirror/CodeMirror/master/lib/codemirror.css">
 <script src="https://cdn.rawgit.com/codemirror/CodeMirror/master/mode/javascript/javascript.js"></script>
