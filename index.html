@@ -45,7 +45,8 @@ if(!self.fetch) {
     $("#openurl").closeModal();
     $("#error").openModal();
 }
-window.location="/edit/?url="+encodeURIComponent(document.getElementById("openurlfield").value);
+window.location = "/edit/?url=" + encodeURIComponent(document.getElementById("openurlfield").value)
+}
   </script>
   <div id="error" class="modal">
   <div class="red modal-content">
@@ -74,5 +75,9 @@ window.location="/edit/?url="+encodeURIComponent(document.getElementById("openur
      <!--Import jQuery before materialize.js-->
      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+     <div class="col s6 offset-s3 center-align">
+       <h3 class="center-align">Special Thanks To:</h3><br>
+       <p class="center-align"><a href="http://aputurk.tk">MegaApuTurkUltra</a>, for his project downloader. This allows "load from url" to work. <br><a href="https://codemirror.net/">CodeMirror</a>, this is the text editor that is used to edit the json. <br><a href="https://stuk.github.io/jszip/">JsZip</a>, this is used to modify the sb2 file, and read from it.</p>
+     </div>
    </body>
  </html>
