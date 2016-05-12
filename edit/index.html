@@ -46,16 +46,17 @@ projectId = projectId.replace("://scratch.mit.edu/projects/", "").replace("https
     response.text().then(function(text) {
         var myCodeMirror = CodeMirror(codemirroreditor, {
         value: text,
-        mode:  {name: "javascript", json: true}
+        mode:  {name: "javascript", json: true},
       });});
   })
 }
   </script>
   <style>
-.CodeMirror {
-  height: auto; !important
-  width: auto; !important
-}
+        .CodeMirror {
+          border: 1px solid #eee; !important
+          height: 500px; !important
+        }
+
   </style>
   </head>
   <body style="height: 100%; width: 100%;">
