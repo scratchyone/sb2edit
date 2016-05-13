@@ -10,7 +10,7 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
      <nav>
     <div class="nav-wrapper blue lighten-2">
-      &nbsp;&nbsp;&nbsp;&nbsp;<a href="/" class="brand-logo">sb2Edit</a>
+      &nbsp;&nbsp;&nbsp;&nbsp;<a href="/sb2edit/" class="brand-logo">sb2Edit</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="/edit/">Editor</a></li>
         <li><a href="https://github.com/scratchyone/sb2edit/tree/gh-pages">Github</a></li>
@@ -29,7 +29,7 @@
   <div id="open" class="modal">
     <div class="modal-content">
       <h4>Open Project</h4>
-      <p><a class="btn waves-effect waves-light orange"><i class="material-icons">publish</i> Upload Project</a>&nbsp;<a onclick="$('#open').closeModal();$('#openurl').openModal();" class="btn waves-effect waves-light orange "><i class="material-icons">cloud</i> Open From URL</a></p>
+      <p><a class="btn waves-effect waves-light orange"><i class="material-icons">publish</i> Upload Project</a>&nbsp;<a onclick="window.location='/sb2edit/edit/';" class="btn waves-effect waves-light orange "><i class="material-icons">cloud</i> Open From URL</a></p>
     </div>
     <div class="modal-footer">
       <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
@@ -45,7 +45,7 @@ if(!self.fetch) {
     $("#openurl").closeModal();
     $("#error").openModal();
 }
-window.location = "/edit/?url=" + encodeURIComponent(document.getElementById("openurlfield").value)
+window.location = "/sb2edit/edit/?url=" + encodeURIComponent(document.getElementById("openurlfield").value)
 }
   </script>
   <div id="error" class="modal">
