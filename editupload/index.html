@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+ <html>
+   <head>
+     <!--Import Google Icon Font-->
+     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <!--Import materialize.css-->
+     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css"  media="screen,projection"/>
+
+     <!--Let browser know website is optimized for mobile-->
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+     <nav>
+    <div class="nav-wrapper blue lighten-2">
+      &nbsp;&nbsp;&nbsp;&nbsp;<a href="/" class="brand-logo">sb2Edit</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="/edit/">Editor</a></li>
+        <li><a href="https://github.com/scratchyone/sb2edit/tree/gh-pages">Github</a></li>
+      </ul>
+    </div>
+  </nav>
+  <script>
+  var myCodeMirror
+  var zips
+  function readSingleFile(e) {
+    var file = document.getElementById("file-input").files[0];
+    if (!file) {
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var contents = e.target.result;
+      var zip = new JSZip();
+      //console.log(contents)
+      zip.loadAsync(contents).then(function(zip) {        console.log("Unzipped!")
+    // you now have every files contained in the loaded zip
+    zip.file("project.json").async("string").catch(function(reason) {
+console.log(reason)
+// rejection
+}).then(function(text) {
+      textt=JSON.parse(text)
+       myCodeMirror = CodeMirror(codemirroreditor, {
+          value: JSON.stringify(textt, null, "\t"),
+          mode:  {name: "javascript", json: true},
+        });    myCodeMirror.setSize("100%", "100%")})
+});
+
+
+    };
+    reader.readAsBinaryString(file);
+  }
+  window.onload = function() {
+
+    }
+    function startDownload() {
+      var file = document.getElementById("file-input").files[0];
+      if (!file) {
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var contents = e.target.result;
+        var zip = new JSZip();
+        //console.log(contents)
+        zip.loadAsync(contents).then(function(zip) {        console.log("Unzipped!")
+zip.file("project.json", myCodeMirror.getValue());
+zip.generateAsync({type:"blob"})
+.then(function(content) {
+    // see FileSaver.js
+    download(content, sb2name);
+});
+      });
+    }
+      var sb2name=file.name;
+      reader.readAsBinaryString(file);
+      }
+  </script>
+  <script src="http://danml.com/js/download.js"></script>
+  <script src="https://cdn.rawgit.com/Stuk/jszip/master/dist/jszip.min.js"></script>
+  </head>
+  <body style="height: 100%; width: 100%;">
+    <a class="col s12 waves-effect waves-light btn red" style="width: 100%" onclick="startDownload();">Download SB2</a>
+<script>
+</script>
+    <input type="file" id="file-input" /> <a class="waves-effect waves-light btn red" onclick="readSingleFile()">Load</a>
+    <div style="height: 100%; width: 100%;" id="codemirroreditor">
+
+    </div>
+    <script src="https://cdn.rawgit.com/codemirror/CodeMirror/master/lib/codemirror.js"></script>
+<link rel="stylesheet" href="https://cdn.rawgit.com/codemirror/CodeMirror/master/lib/codemirror.css">
+<script src="https://cdn.rawgit.com/codemirror/CodeMirror/master/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+  </body>
+  </html>
