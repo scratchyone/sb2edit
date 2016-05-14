@@ -1,64 +1,74 @@
 <!DOCTYPE html>
- <html>
-   <head>
-     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css"  media="screen,projection"/>
-<script src="scripts/homepage.js"></script>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-     <nav>
-    <div class="nav-wrapper blue lighten-2">
-      &nbsp;&nbsp;&nbsp;&nbsp;<a href="/sb2edit/" class="brand-logo">sb2Edit</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/edit/">Editor</a></li>
-        <li><a href="https://github.com/scratchyone/sb2edit/tree/gh-pages">Github</a></li>
-      </ul>
-    </div>
-  </nav>
-  <div class="row">
-     <div class="col s12 center-align orange-text"><h3>Sb2 Json Editor</h3></div>
-   </div>
-<div class="col s12 center-align black-text light header"><h5 class="col s12 center-align black-text light header">Easily edit sb2 files!<h5></div>
-<br>
-<div class="col s12 center-align">
-<a class="center-align waves-effect waves-light btn-large red" onclick="$('#open').openModal();">Go</a>
-  <div id="open" class="modal">
-    <div class="modal-content">
-      <h4>Open Project</h4>
-      <p><a href="/sb2edit/editupload/" class="btn waves-effect waves-light orange"><i class="material-icons">publish</i> Upload Project</a>&nbsp;<a onclick="$('#open').closeModal();$('#openurl').openModal();" class="btn waves-effect waves-light orange "><i class="material-icons">cloud</i> Open From URL</a></p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-    </div>
-  </div>
-  <div id="error" class="modal">
-  <div class="red modal-content">
-    <h4 id="errormodaltitle"></h4>
-    <p id="errormodalmessage"></p>
-  </div>
-</div>
-  <div id="openurl" class="modal">
-    <div class="modal-content">
-      <h4>Open Project From Url</h4>
-      <p><div class="input-field col s6">
-          <input value="https://scratch.mit.edu/projects/" id="openurlfield" type="text" class="validate">
-        </div><a onclick="openfromurl()" class="center-align btn waves-effect waves-light orange">Open</a></p>
-    </div>
-  <div class="progress" id="openfromurlbar" style="visibility: hidden;">
-    <div class="indeterminate"></div>
-</div>
-    <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-    </div>
-  </div>
-</div>
-   </head>
-
-   <body>
-     <div class="col s6 offset-s3 center-align">
-       <h3 class="center-align">Special Thanks To:</h3><br>
-       <p class="center-align"><a href="http://aputurk.tk">MegaApuTurkUltra</a>, for his project downloader. This allows "load from url" to work. <br><a href="https://codemirror.net/">CodeMirror</a>, this is the text editor that is used to edit the json. <br><a href="https://stuk.github.io/jszip/">JsZip</a>, this is used to modify the sb2 file, and read from it.</p>
-     </div>
-   </body>
- </html>
+<html>
+	<head>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css" media="screen,projection" />
+		<script src="scripts/homepage.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<nav>
+			<div class="nav-wrapper blue lighten-2">
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="/sb2edit/" class="brand-logo">sb2Edit</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li><a href="/edit/">Editor</a>
+					</li>
+					<li><a href="https://github.com/scratchyone/sb2edit">Github</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="row">
+			<div class="col s12 center-align orange-text">
+				<h3>Sb2 Json Editor</h3>
+			</div>
+		</div>
+		<div class="col s12 center-align black-text light header">
+			<h5 class="col s12 center-align black-text light header">
+			Easily edit sb2 files!
+			<h5>
+		</div>
+		<br>
+		<div class="col s12 center-align">
+			<a class="center-align waves-effect waves-light btn-large red" onclick="$('#open').openModal();">Go</a>
+			<div id="open" class="modal">
+				<div class="modal-content">
+					<h4>Open Project</h4>
+					<p><a href="/sb2edit/editupload/" class="btn waves-effect waves-light orange"><i class="material-icons">publish</i> Upload Project</a>&nbsp;<a onclick="$('#open').closeModal();$('#openurl').openModal();" class="btn waves-effect waves-light orange "><i class="material-icons">cloud</i> Open From URL</a></p>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+				</div>
+			</div>
+			<div id="error" class="modal">
+				<div class="red modal-content">
+					<h4 id="errormodaltitle"></h4>
+					<p id="errormodalmessage"></p>
+				</div>
+			</div>
+			<div id="openurl" class="modal">
+				<div class="modal-content">
+					<h4>Open Project From Url</h4>
+					<p>
+					<div class="input-field col s6">
+						<input value="https://scratch.mit.edu/projects/" id="openurlfield" type="text" class="validate">
+					</div>
+					<a onclick="openfromurl()" class="center-align btn waves-effect waves-light orange">Open</a></p>
+				</div>
+				<div class="progress" id="openfromurlbar" style="visibility: hidden;">
+					<div class="indeterminate"></div>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+				</div>
+			</div>
+		</div>
+	</head>
+	<body>
+		<div class="col s6 offset-s3 center-align">
+			<h3 class="center-align">Special Thanks To:</h3>
+			<br>
+			<p class="center-align"><a href="http://aputurk.tk">MegaApuTurkUltra</a>, for his project downloader. This allows "load from url" to work. <br><a href="https://codemirror.net/">CodeMirror</a>, this is the text editor that is used to edit the json. <br><a href="https://stuk.github.io/jszip/">JsZip</a>, this is used to modify the sb2 file, and read from it.</p>
+		</div>
+	</body>
+</html>
