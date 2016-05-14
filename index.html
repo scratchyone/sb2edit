@@ -1,12 +1,11 @@
 <!DOCTYPE html>
  <html>
    <head>
-     <!--Import Google Icon Font-->
+     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-     <!--Import materialize.css-->
      <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css"  media="screen,projection"/>
-
-     <!--Let browser know website is optimized for mobile-->
+<script src="scripts/homepage.js"></script>
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
      <nav>
     <div class="nav-wrapper blue lighten-2">
@@ -24,8 +23,6 @@
 <br>
 <div class="col s12 center-align">
 <a class="center-align waves-effect waves-light btn-large red" onclick="$('#open').openModal();">Go</a>
-
-  <!-- Modal Structure -->
   <div id="open" class="modal">
     <div class="modal-content">
       <h4>Open Project</h4>
@@ -35,19 +32,6 @@
       <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
     </div>
   </div>
-  <script>
-function openfromurl() {
-document.getElementById("openfromurlbar").style.visibility=""
-if(!self.fetch) {
-    document.getElementById("errormodaltitle").innerHTML="Error: Fetch not found";
-    document.getElementById("errormodalmessage").innerHTML="Your browser does not support fetch! If you have a newer browser, please make an issue <a href='https://github.com/scratchyone/sb2edit/issues/new?title="+"Error: Fetch not found"+"&body="+encodeURIComponent(navigator.userAgent)+" ERROR: Fetch not found!''"+">here</a>. Please keep the prefilled data, and add anything else you would like.";
-    $("#open").closeModal();
-    $("#openurl").closeModal();
-    $("#error").openModal();
-}
-window.location = "/sb2edit/edit/?url=" + encodeURIComponent(document.getElementById("openurlfield").value)
-}
-  </script>
   <div id="error" class="modal">
   <div class="red modal-content">
     <h4 id="errormodaltitle"></h4>
@@ -72,9 +56,6 @@ window.location = "/sb2edit/edit/?url=" + encodeURIComponent(document.getElement
    </head>
 
    <body>
-     <!--Import jQuery before materialize.js-->
-     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
      <div class="col s6 offset-s3 center-align">
        <h3 class="center-align">Special Thanks To:</h3><br>
        <p class="center-align"><a href="http://aputurk.tk">MegaApuTurkUltra</a>, for his project downloader. This allows "load from url" to work. <br><a href="https://codemirror.net/">CodeMirror</a>, this is the text editor that is used to edit the json. <br><a href="https://stuk.github.io/jszip/">JsZip</a>, this is used to modify the sb2 file, and read from it.</p>
