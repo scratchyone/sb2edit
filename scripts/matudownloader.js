@@ -22,12 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-
 var projectId = qs["url"];
 projectId = projectId.replace("://scratch.mit.edu/projects/", "").replace("https", "").replace("http", "");
 projectId = parseInt(projectId);
-if(isNaN(projectId)){
-  alert("INVALID ID")
+if (isNaN(projectId)) {
+    alert("INVALID ID")
 }
 
 
@@ -42,129 +41,142 @@ var costumesToDownload = [];
 var totalAssets = 0;
 var completeAssets = 0;
 
-function startDownload(projectId){
-logMessage("Downloading project: "+projectId);
-soundId = 0;
-costumeId = 0;
-totalAssets = 0;
-completeAssets = 0;
-soundsToDownload = [];
-costumesToDownload = [];
-id = projectId;
-setProgress(0);
-jszip = new JSZip();
-jszip.comment = "Created with MegaApuTurkUltra's Project Downloader";
-$.get("https://cdn.projects.scratch.mit.edu/internalapi/project/"+projectId+"/get/", function(dataa){
-data=JSON.parse(myCodeMirror.getValue());
-setProgress(10);
-logMessage("Loaded JSON");
-project = data;
-processSoundsAndCostumes(project);
-if(project.hasOwnProperty("children")){
-  for(child in project.children){
-    processSoundsAndCostumes(project.children[child]);
-  }
-}
-logMessage("Found "+totalAssets+" assets");
-jszip.file("project.json", JSON.stringify(project, null, "\t"));
-downloadCostume();
-}).fail(perror);
-}
-
-function downloadCostume(){
-if(costumesToDownload.length > 0){
-var current = costumesToDownload.pop();
-logMessage("Loading asset "+current.costumeName+" ("+completeAssets+"/"+totalAssets+")");
-JSZipUtils.getBinaryContent(
-  "https://cdn.assets.scratch.mit.edu/internalapi/asset/"+current.baseLayerMD5+"/get/",
-  function(err, data){
-    if(err) {error();return;}
-    var ext = current.baseLayerMD5.match(/\.[a-zA-Z0-9]+/)[0];
-    jszip.file(current.baseLayerID+ext, data, {binary: true});
-    completeAssets++;
-    setProgress(10+89*(completeAssets/totalAssets));
-    downloadCostume();
-});
-} else {
-downloadSound();
-}
+function startDownload(projectId) {
+    logMessage("Downloading project: " + projectId);
+    soundId = 0;
+    costumeId = 0;
+    totalAssets = 0;
+    completeAssets = 0;
+    soundsToDownload = [];
+    costumesToDownload = [];
+    id = projectId;
+    setProgress(0);
+    jszip = new JSZip();
+    jszip.comment = "Created with MegaApuTurkUltra's Project Downloader";
+    $.get("https://cdn.projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/", function(dataa) {
+        data = JSON.parse(myCodeMirror.getValue());
+        setProgress(10);
+        logMessage("Loaded JSON");
+        project = data;
+        processSoundsAndCostumes(project);
+        if (project.hasOwnProperty("children")) {
+            for (child in project.children) {
+                processSoundsAndCostumes(project.children[child]);
+            }
+        }
+        logMessage("Found " + totalAssets + " assets");
+        jszip.file("project.json", JSON.stringify(project, null, "\t"));
+        downloadCostume();
+    }).fail(perror);
 }
 
-function downloadSound(){
-if(soundsToDownload.length > 0){
-var current = soundsToDownload.pop();
-logMessage("Loading asset "+current.soundName+" ("+completeAssets+"/"+totalAssets+")");
-JSZipUtils.getBinaryContent(
-  "https://cdn.assets.scratch.mit.edu/internalapi/asset/"+current.md5+"/get/",
-  function(err, data){
-    if(err) {error();return;}
-    var ext = current.md5.match(/\.[a-zA-Z0-9]+/)[0];
-    jszip.file(current.soundID+ext, data, {binary: true});
-    completeAssets++;
-    setProgress(10+89*(completeAssets/totalAssets));
-    downloadSound();
-});
-} else {
-logMessage("Loading project title...");
-$.get("https://scratch.mit.edu/api/v1/project/"+id+"/?format=json", function(data){
-  logMessage("Generating ZIP...");
-  var content = jszip.generate({type:"blob"});
-  logMessage("Saving...");
-  try {
-    saveAs(content, data.title+".sb2");
-  } catch(e){
-    saveAs(content, "project.sb2");
-  }
-  logMessage("Complete");
-  psuccess();
-}).fail(function(){
-  logMessage("Failed to load project title");
-  logMessage("Generating ZIP...");
-  var content = jszip.generate({type:"blob"});
-  logMessage("Saving...");
-  saveAs(content, "project.sb2");
-  logMessage("Complete");
-  psuccess();
-});
-}
+function downloadCostume() {
+    if (costumesToDownload.length > 0) {
+        var current = costumesToDownload.pop();
+        logMessage("Loading asset " + current.costumeName + " (" + completeAssets + "/" + totalAssets + ")");
+        JSZipUtils.getBinaryContent(
+            "https://cdn.assets.scratch.mit.edu/internalapi/asset/" + current.baseLayerMD5 + "/get/",
+            function(err, data) {
+                if (err) {
+                    error();
+                    return;
+                }
+                var ext = current.baseLayerMD5.match(/\.[a-zA-Z0-9]+/)[0];
+                jszip.file(current.baseLayerID + ext, data, {
+                    binary: true
+                });
+                completeAssets++;
+                setProgress(10 + 89 * (completeAssets / totalAssets));
+                downloadCostume();
+            });
+    } else {
+        downloadSound();
+    }
 }
 
-function processSoundsAndCostumes(node){
-if(node.hasOwnProperty("costumes")){
-for(var i=0;i<node.costumes.length;i++){
-  var current = node.costumes[i];
-  current.baseLayerID = costumeId;
-  costumeId++;
-  totalAssets++;
-  costumesToDownload.push(current);
-}
-}
-if(node.hasOwnProperty("sounds")){
-for(var i=0;i<node.sounds.length;i++){
-  var current = node.sounds[i];
-  current.soundID = soundId;
-  soundId++;
-  totalAssets++;
-  soundsToDownload.push(current);
-}
-}
+function downloadSound() {
+    if (soundsToDownload.length > 0) {
+        var current = soundsToDownload.pop();
+        logMessage("Loading asset " + current.soundName + " (" + completeAssets + "/" + totalAssets + ")");
+        JSZipUtils.getBinaryContent(
+            "https://cdn.assets.scratch.mit.edu/internalapi/asset/" + current.md5 + "/get/",
+            function(err, data) {
+                if (err) {
+                    error();
+                    return;
+                }
+                var ext = current.md5.match(/\.[a-zA-Z0-9]+/)[0];
+                jszip.file(current.soundID + ext, data, {
+                    binary: true
+                });
+                completeAssets++;
+                setProgress(10 + 89 * (completeAssets / totalAssets));
+                downloadSound();
+            });
+    } else {
+        logMessage("Loading project title...");
+        $.get("https://scratch.mit.edu/api/v1/project/" + id + "/?format=json", function(data) {
+            logMessage("Generating ZIP...");
+            var content = jszip.generate({
+                type: "blob"
+            });
+            logMessage("Saving...");
+            try {
+                saveAs(content, data.title + ".sb2");
+            } catch (e) {
+                saveAs(content, "project.sb2");
+            }
+            logMessage("Complete");
+            psuccess();
+        }).fail(function() {
+            logMessage("Failed to load project title");
+            logMessage("Generating ZIP...");
+            var content = jszip.generate({
+                type: "blob"
+            });
+            logMessage("Saving...");
+            saveAs(content, "project.sb2");
+            logMessage("Complete");
+            psuccess();
+        });
+    }
 }
 
-function perror(){
+function processSoundsAndCostumes(node) {
+    if (node.hasOwnProperty("costumes")) {
+        for (var i = 0; i < node.costumes.length; i++) {
+            var current = node.costumes[i];
+            current.baseLayerID = costumeId;
+            costumeId++;
+            totalAssets++;
+            costumesToDownload.push(current);
+        }
+    }
+    if (node.hasOwnProperty("sounds")) {
+        for (var i = 0; i < node.sounds.length; i++) {
+            var current = node.sounds[i];
+            current.soundID = soundId;
+            soundId++;
+            totalAssets++;
+            soundsToDownload.push(current);
+        }
+    }
+}
+
+function perror() {
 
 }
 
-function psuccess(){
+function psuccess() {
 
 }
 
-function setProgress(perc){
+function setProgress(perc) {
 
 }
 
-function reset(){
+function reset() {
 
 }
 
-function logMessage(msg){
-}
+function logMessage(msg) {}
