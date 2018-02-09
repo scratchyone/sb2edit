@@ -53,7 +53,7 @@ function startDownload(projectId) {
     setProgress(0);
     jszip = new JSZip();
     jszip.comment = "Created with MegaApuTurkUltra's Project Downloader";
-    $.get("https://cdn.projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/", function(dataa) {
+    $.get("https://cors-anywhere.herokuapp.com/https://cdn.projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/", function(dataa) {
         data = JSON.parse(myCodeMirror.getValue());
         setProgress(10);
         logMessage("Loaded JSON");
@@ -115,7 +115,7 @@ function downloadSound() {
             });
     } else {
         logMessage("Loading project title...");
-        $.get("https://scratch.mit.edu/api/v1/project/" + id + "/?format=json", function(data) {
+        $.get("https://cors-anywhere.herokuapp.com/https://cdn.projects.scratch.mit.edu/internalapi/project/" + id + "/get/", function(data) {
             logMessage("Generating ZIP...");
             var content = jszip.generate({
                 type: "blob"
