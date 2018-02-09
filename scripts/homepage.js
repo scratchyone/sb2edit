@@ -9,3 +9,12 @@ function openfromurl() {
     }
     window.location = "/sb2edit/edit/?url=" + encodeURIComponent(document.getElementById("openurlfield").value)
 }
+let input=document.getElementById("openurlfield")
+input.onkeydown= (e) => {
+	setTimeout(()=>{
+		let v=input.value
+v="https://scratch.mit.edu/projects/"+v.replace(/[^\d]/g,'')
+		input.value=v
+	}
+		,5)
+}
