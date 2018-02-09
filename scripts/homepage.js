@@ -9,6 +9,7 @@ function openfromurl() {
     }
     window.location = "/sb2edit/edit/?url=" + encodeURIComponent(document.getElementById("openurlfield").value)
 }
+document.body.onload=() => {
 let input=document.getElementById("openurlfield")
 input.onkeydown= (e) => {
 	setTimeout(()=>{
@@ -17,4 +18,5 @@ v="https://scratch.mit.edu/projects/"+v.replace(/[^\d]/g,'')
 		input.value=v
 	}
 		,5)
+}
 }
