@@ -25,7 +25,7 @@ window.onload = function() {
         .then(function(response) {
             response.text().then(function(text) {
                 myCodeMirror = CodeMirror(codemirroreditor, {
-                    value: text,
+                    value: JSON.stringify(text,null, "\t"),
                     mode: {
                         name: "javascript",
                         json: true
