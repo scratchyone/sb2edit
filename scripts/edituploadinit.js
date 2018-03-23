@@ -20,7 +20,7 @@ function readSingleFile(e) {
             }).then(function(text) {
                 textt = JSON.parse(text)
                 myCodeMirror = CodeMirror(codemirroreditor, {
-                    value: JSON.stringify(textt, null, "\t"),
+                    value: JSON.stringify(textt,null, 2),
                     mode: {
                         name: "javascript",
                         json: true
