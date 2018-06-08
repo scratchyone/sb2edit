@@ -21,7 +21,7 @@ if (isNaN(projectId)) {
 }
 var myCodeMirror
 window.onload = function() {
-    fetch("https://cors-anywhere.herokuapp.com/https://cdn.projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/")
+    fetch("https://cdn.projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/")
         .then(function(response) {
             response.text().then(function(text) {
                 myCodeMirror = CodeMirror(codemirroreditor, {
