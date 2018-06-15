@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 const getTitle = (url) => {  
-  return fetch(`${url}`)
+  return fetch(`https://crossorigin.me/${url}`)
     .then((response) => response.text())
     .then((html) => {
       const doc = new DOMParser().parseFromString(html, "text/html");
