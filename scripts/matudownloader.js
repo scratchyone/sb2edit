@@ -22,6 +22,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+const getTitle = (url) => {  
+  return fetch(`${url}`)
+    .then((response) => response.text())
+    .then((html) => {
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const title = doc.querySelectorAll('title')[0];
+      return title.innerText;
+    });
+};
 var projectId = qs["url"];
 projectId = projectId.replace("://scratch.mit.edu/projects/", "").replace("https", "").replace("http", "");
 projectId = parseInt(projectId);
@@ -115,14 +124,14 @@ function downloadSound() {
             });
     } else {
         logMessage("Loading project title...");
-        $.get("https://cors-anywhere.herokuapp.com/https://cdn.projects.scratch.mit.edu/internalapi/project/" + id + "/get/", function(data) {
+        $.get("https://scratch.mit.edu/projects/" + id, function(data) {
             logMessage("Generating ZIP...");
             var content = jszip.generate({
                 type: "blob"
             });
             logMessage("Saving...");
             try {
-                saveAs(content, data.title + ".sb2");
+                saveAs(content, getTitle("https://scratch.mit.edu/projects/" + id).split(" on Scratch").join("") + ".sb2");
             } catch (e) {
                 saveAs(content, "project.sb2");
             }
